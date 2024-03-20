@@ -1,0 +1,72 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{fragments/main_layout}">
+<head>
+    <title>Ticket de Réservation</title>
+    <!-- Ajoutez ici vos styles CSS pour le ticket -->
+    <style>
+        /* Exemple de styles pour le ticket */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .ticket {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        .ticket-info {
+            margin-bottom: 15px;
+        }
+    </style>
+    <script th:inline="javascript">
+        function printDiv() {
+            var body = document.getElementById("body").innerHTML;
+            var ticket = document.getElementById("ticket").innerHTML;
+            document.getElementById("body").innerHTML = ticket;
+            window.print();
+            document.getElementById("body").innerHTML = body;
+        }
+    </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body class="d-flex flex-column min-vh-100" id="body">
+<form th:action="@{cancelReservation}" method="post">
+
+    <input type="hidden"  name="userId"  th:value="${userId}" id="userId">
+    <input type="hidden"  name="userId"  th:value="${flightIds}" id="flightIds">
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            Booking Information
+        </div>
+        <div class="card-body" id="ticket">
+            <h5 class="card-title">Nom de Passanger</h5>
+            <p class="card-text" th:text="${userNmame}"></p>
+            <h5 class="card-title">Ville de depart</h5>
+            <p class="card-text" th:text="${sources}"></p>
+            <div class="arrow-icon">&#8594;</div>
+            <h5 class="card-title">Ville d'arriver</h5>
+            <p class="card-text" th:text="${destinations}"></p>
+            <h5 class="card-title">Temps de vol</h5>
+            <p class="card-text" th:text="${time}"></p>
+            <h5 class="card-title">Numero de  Vol</h5>
+            <p class="card-text" th:text="${flightIds}"></p>
+        </div>
+        <div class="card-footer text-muted">
+            <button onclick="printDiv()" class="btn btn-primary">Print your Ticket now</button>
+        </div>
+        <div class="card-footer text-muted">
+
+
+                <button type="submit" class="btn btn-danger" name="cancelReservation">Annuler Reservation</button>
+
+        </div>
+    </div>
+</div>
+</form>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>

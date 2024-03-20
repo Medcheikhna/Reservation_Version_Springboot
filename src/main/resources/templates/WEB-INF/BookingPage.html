@@ -1,0 +1,90 @@
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/main_layout}"
+      xmlns:th="https://www.thymeleaflightsearch.org">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Information</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link th:rel="stylesheet" type="text/css"  th:href="@{AirplaneStyle.css}">
+</head>
+<body>
+
+<div class="alert alert-danger" role="alert">
+    <span th:text="${reservationMessage}"> </span>
+</div>
+ 
+<div class="container mt-5">
+
+
+    <div th:if="${alert}" class="alert alert-danger" role="alert">
+        <p th:text="${alert}"></p>
+    </div>
+    <form th:action="@{/reservation/createReservation}" method="post">
+    <div class="card">
+        <div class="card-header">
+            Booking Information
+        </div>
+
+        <input type="hidden"  name="userNmame"  th:value="${userNmame}" id="userNmame">
+        <input type="hidden"  name="userId"  th:value="${userId}" id="userId">
+
+        <input type="hidden"  name="time"  th:value="${flightsearch.getArrival_time()}" id="time">
+        <input type="hidden"  name="flightIds"  th:value="${flightsearch.getFlightid()}" id="flightIds">
+        <input type="hidden" name="sources"  th:value="${flightsearch.getSource()}" id="sources">
+        <input type="hidden" name="destinations"  th:value="${flightsearch.getDestination()}" id="destinations">
+
+        <div class="card-body">
+         <center > 
+             <h5 class="card-title" >Numero de vol</h5>
+             <p class="card-text"  th:text="${flightsearch.getFlightid()}"></p>
+         </center>
+            <h5 class="card-title" >Ville de depart</h5>
+            <p class="card-text"  th:text="${flightsearch.getSource()}"></p>
+            <div class="arrow-icon">&#8594;</div>
+            <h5 class="card-title">Ville d'arriver</h5>
+            <p class="card-text"  th:text="${flightsearch.getDestination()}"> </p>
+            <h5 class="card-title">Temps de vol</h5>
+            <p class="card-text" th:text="${flightsearch.getArrival_time()}"></p>
+        </div>
+       
+        <div class="card-footer text-muted">
+            <button type="submit" class="btn btn-primary" >Reserve maintenant</button>
+        </div>
+       
+       <tr align="center">
+        <td align="center" colspan="4"><font style="font-size: large;">
+
+        </font></td>
+        </tr>
+         
+    </div>
+</form>
+</div>
+
+<!--<form th:action="@{payment/nextPage}" method="get">-->
+
+
+<!--    <input type="hidden"  name="userNmame"  th:value="${userNmame}" id="userNmame">-->
+<!--    <input type="hidden"  name="userId"  th:value="${userId}" id="userId">-->
+
+<!--    <input type="hidden"  name="time"  th:value="${flightsearch.getArrival_time()}" id="time">-->
+<!--    <input type="hidden"  name="flightIds"  th:value="${flightsearch.getFlightid()}" id="flightIds">-->
+<!--    <input type="hidden" name="sources"  th:value="${flightsearch.getSource()}" id="sources">-->
+<!--    <input type="hidden" name="destinations"  th:value="${flightsearch.getDestination()}" id="destinations">-->
+
+<!--</form>-->
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+
+
+
+

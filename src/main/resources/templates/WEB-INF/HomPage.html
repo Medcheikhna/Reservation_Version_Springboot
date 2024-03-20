@@ -1,0 +1,91 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="Model.Vol" %>
+<%@ page import="Model.Utilisateur" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="Dao.VolDAO" %>
+<%@ page import="Dao.ReservationDao" %>
+<%@ page import="Model.Reservation" %>
+<%@ page import="java.util.Iterator" %>
+
+
+<html>
+<head>
+    <title>Recherche de Vols</title>
+    <!-- Ajoutez ces lignes dans la section <head> de votre fichier rechercheVols.jsp -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</head>
+<!-- Utilisez Bootstrap dans votre formulaire de recherche -->
+<% Boolean isAdmin = (Boolean) session.getAttribute("is_admin"); %>
+<% if (isAdmin != null && isAdmin) { %>
+<p>Welcome, Admin!</p>
+<% } else { %>
+<p>Welcome, User!</p>
+<% } %>
+<p>This is your application's main page after a successful login.</p>
+
+<%-- Récupération de l'utilisateur depuis la session --%>
+<%--<% Utilisateur utilisateur = (Utilisateur) session.getAttribute("authenticatedUser"); %>--%>
+
+<%--&lt;%&ndash; Vérification de l'authentification &ndash;%&gt;--%>
+<%--<% if (utilisateur != null) { %>--%>
+<%--<h2>Bienvenue, <%= utilisateur.getNomUtilisateur() %>!</h2>--%>
+<%--&lt;%&ndash; Autres contenus pour un utilisateur authentifié &ndash;%&gt;--%>
+<%--<% } else { %>--%>
+<%--<p>Vous n'êtes pas authentifié. Redirection vers la page de login...</p>--%>
+<%--<% response.sendRedirect("index.jsp"); %>--%>
+<%--<% } %>--%>
+
+<body class="container">
+    <h1>Liste des Réservations</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID Réservation</th>
+                <th>Date de Réservation</th>
+                <th>ID Utilisateur</th>
+                <th>Statut</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+         <%
+                    List<Reservation> reservations = (List<Reservation>) request.getAttribute("reservations");
+                    Iterator<Reservation> iterator = reservations.iterator();
+                    while (iterator.hasNext()) {
+                        Reservation reservation = iterator.next();
+                    %>
+        <tbody>
+
+            <tr>
+                <td><%=reservation.getIdReservation()%></td>
+                <td><%=reservation.getFlightid()%></td>
+                <td><%=reservation.getIdUtilisateur()%></td>
+                <td><%=reservation.getStatus()%></td>
+                <td>
+            </tr>
+
+                    <form action="admin/reservations" method="post">
+                        <input type="hidden" name="action" value="delete"/>
+                        <input type="hidden" name="reservationId" value="<%=reservation.getIdReservation()%>" id="reservationId"/>
+                        <button type="submit">Supprimer</button>
+                    </form>
+                    <form action="admin/reservations" method="post">
+                        <input type="hidden" name="action" value="edit"/>
+                        <input type="hidden" name="reservationId" value="<%=reservation.getIdReservation()%>" id="reservationId"/>
+                        <button type="submit">Modifier</button>
+                    </form>
+                </td>
+
+        </tbody>
+
+    </table>
+    <% } %>
+</body>
+
+
+</html>
